@@ -1,6 +1,8 @@
 #! /usr/bin/env ruby
+require_relative "../lib/console_io.rb"
 require_relative "../lib/game.rb"
 
-game = Game.new
+io = ConsoleIO.new
+game = Game.new(io)
 puts "Welcome to Console Tic Tac Toe."
-
+game.show_board
