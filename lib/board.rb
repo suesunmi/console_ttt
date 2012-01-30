@@ -11,7 +11,7 @@ class Board
       [1,5,9],
       [3,5,7]
     ]
-    @winning_mark
+    @winner
   end
 
   def display    # display string should not be board's responsibility
@@ -51,7 +51,7 @@ class Board
 
   def has_winner
     do_scoring
-    return @winning_mark != nil
+    return @winner != nil
   end
 
   def do_scoring
@@ -61,7 +61,7 @@ class Board
       c = pos[2]
       # this feels ugly
       if  @plays[a] != "" && @plays[a] == @plays[b] && @plays[b] == @plays[c]
-        @winning_mark = @plays[c]
+        @winner = @plays[c]
         break
       end
     end
