@@ -21,7 +21,7 @@ describe Game do
     @io.string = "Franz\n"
     @game.collect_first_player
     @game.player_a.name.should == "Franz"
-    @game.player_a.marker.should == "X"
+    @game.player_a.id.should == "a"
   end
 
   it "displays prompt for second player" do
@@ -33,12 +33,11 @@ describe Game do
     @io.string = "Sally\n"
     @game.collect_second_player
     @game.player_b.name.should == "Sally"
-    @game.player_b.marker.should == "O"
   end
 
   it "displays an empty board" do
     @game.show_board
-    @io.string.should include("1:   |  2:   |  3:   |  \n4:   |  5:   |  6:   |  \n7:   |  8:   |  9:   |  \n")
+    @io.string.should include("1:    |  2:    |  3:    |  \n4:    |  5:    |  6:    |  \n7:    |  8:    |  9:    |  \n")
   end
 
   it "starts the game and sets the first player" do
@@ -49,9 +48,7 @@ describe Game do
     @game.start_game
     @game.whose_turn.should == @game.player_a
     @game.player_a.name.should == "Jack"
-    @game.player_a.marker.should == "X"
     @game.player_b.name.should == "Jill"
-    @game.player_b.marker.should == "O"
   end
 
   it "prompts the correct user for the first play" do
@@ -63,7 +60,7 @@ describe Game do
   it "collects and records the first play properly" do
     bonnie_clyde_game_setup
     make_a_play("7")
-    @game.board.plays[7].should == @game.whose_turn.marker
+    @game.board.player_at(7).should == @game.whose_turn.id
   end
 
   it "decides game is not over after one play" do
@@ -86,11 +83,11 @@ describe Game do
     bonnie_clyde_game_setup
     make_a_play("7")
     @game.whose_turn.name.should == "Bonnie"
-    @game.board.plays[7].should == @game.whose_turn.marker
+    @game.board.player_at(7).should == @game.whose_turn.id
     @game.evaluate
     make_a_play("8")
     @game.whose_turn.name.should == "Clyde"
-    @game.board.plays[8].should == @game.whose_turn.marker
+    @game.board.player_at(8).should == @game.whose_turn.id
   end
 
   it "decides game is over when there is a winner" do
