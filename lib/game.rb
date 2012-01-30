@@ -21,7 +21,7 @@ class Game
   end
 
   def show_welcome
-    @io.puts "Welcome to Tic Tac Toe"
+    @io.puts "Welcome to Tic Tac Toe"    # text literals shouldn't be here
   end
 
   def set_up_players
@@ -31,13 +31,13 @@ class Game
     collect_second_player
   end
 
-  def prompt_first_player_name
+  def prompt_first_player_name    # 2 sets of methods for first and second player to account for different prompts
     @io.puts "What is your name?"
   end
 
   def collect_first_player
     name = @io.gets.chomp
-    @player_a = Player.new(name, "X")
+    @player_a = Player.new(name, "a")
   end
 
   def prompt_second_player_name
@@ -46,7 +46,7 @@ class Game
 
   def collect_second_player
     name = @io.gets.chomp
-    @player_b = Player.new(name, "O")
+    @player_b = Player.new(name, "b")
   end
 
   def start_game
@@ -73,8 +73,8 @@ class Game
 
   def collect_play
     position = @io.gets
-    position = position.to_i if position.class == String
-    @board.plays[position] = @whose_turn.marker
+    position = position.to_i if position.class == String    # should game be responsible for manipulating input strings?
+    @board.play(position, @whose_turn.id)
   end
 
   def over?
@@ -96,11 +96,3 @@ class Game
     end
   end
 end
-
-
-#  every puts statement is its own method, for the sake of being able to test the io.
-#  Things I don't like:
-#
-#     prompt text literals
-#     string manipulation of inputs coming from the console
-#     explicit methods for 1st player and 2nd player collection
