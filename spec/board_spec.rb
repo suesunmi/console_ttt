@@ -5,21 +5,21 @@ describe Board do
     @board = Board.new
   end
   it "marks the play properly" do
-    @board.plays[2] = "X"
-    @board.plays[2].should == "X"
+    @board.play(2, "a")
+    @board.play(2, "a")
   end
   it "knows it's not full with after just 3 plays" do
-    @board.plays[2] = "X"
-    @board.plays[5] = "O"
-    @board.plays[7] = "X"
+    @board.play(2, "a")
+    @board.play(5, "b")
+    @board.play(7, "a")
     @board.should_not be_full
   end
   it "knows when there is a winner" do
-    @board.plays[1] = "X"
-    @board.plays[6] = "O"
-    @board.plays[2] = "X"
-    @board.plays[7] = "O"
-    @board.plays[3] = "X"
+    @board.play(1, "a")
+    @board.play(6, "b")
+    @board.play(2, "a")
+    @board.play(7, "b")
+    @board.play(3, "a")
     @board.has_winner.should == true
   end
 end
