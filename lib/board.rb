@@ -1,5 +1,4 @@
 class Board
-  attr_accessor :plays
   def initialize
     @plays = Hash[ 1, "", 2, "", 3, "", 4, "", 5, "", 6, "", 7, "", 8, "", 9, ""]
     @winning_combos = [
@@ -15,13 +14,27 @@ class Board
     @winning_mark
   end
 
-  def display
+  def display    # display string should not be board's responsibility
     output = ""  
-    @plays.each do |position, marker|
-      output += "#{position}: #{marker}  |  "
+    @plays.each do |position, player|
+      output += "#{position}: #{get_display_mark(player)}  |  "
       output += "\n" if position % 3 == 0
     end
     output
+  end
+
+  def get_display_mark(player)    # display string should not be board's responsibility
+    if player == "a"
+      "X"
+    elsif player == "b"
+      "O"
+    else
+      " "
+    end
+  end
+
+  def player_at(position)
+    @plays[position]
   end
 
   def full?
@@ -32,16 +45,21 @@ class Board
     full
   end
 
+  def play(position, who)
+    @plays[position] = who
+  end
+
   def has_winner
     do_scoring
     return @winning_mark != nil
   end
 
   def do_scoring
-    @winning_combos.each do |combo|
-      a = combo[0]
-      b = combo[1]
-      c = combo[2]
+    @winning_combos.each do |pos|
+      a = pos[0]
+      b = pos[1]
+      c = pos[2]
+      # this feels ugly
       if  @plays[a] != "" && @plays[a] == @plays[b] && @plays[b] == @plays[c]
         @winning_mark = @plays[c]
         break
