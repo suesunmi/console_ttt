@@ -1,7 +1,7 @@
 class Player
-  attr_accessor :name, :marker
-  def initialize(name, marker)
+  attr_accessor :name, :id
+  def initialize(name, id)
     @name = name
-    @marker = marker
+    @id = id
   end
 end
