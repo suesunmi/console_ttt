@@ -59,8 +59,7 @@ class Board
       a = pos[0]
       b = pos[1]
       c = pos[2]
-      # this feels ugly
-      if  @plays[a] != "" && @plays[a] == @plays[b] && @plays[b] == @plays[c]
+      if  @plays[a] != "" && @plays[a] == @plays[b] && @plays[b] == @plays[c]    # this feels ugly
         @winner = @plays[c]
         break
       end
