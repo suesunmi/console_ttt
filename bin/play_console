@@ -1,5 +1,6 @@
 #! /usr/bin/env ruby
-require_relative "../lib/game.rb"
+$: << File.dirname(__FILE__) + "/../lib" 
+require "game_prepper"
 
-game = Game.new(Kernel)
-game.run
+game = GamePrepper.new(Kernel)
+game.prep_and_run

@@ -1,52 +1,32 @@
-require_relative 'board'
-require_relative 'player'
-
 class Game
   attr_reader :board, :player_a, :player_b, :whose_turn
 
-  def initialize(io)
-    @board = Board.new
+  def initialize(board, io, a, b)
+    @board = board
     @io= io
-    @player_a = nil
-    @player_b = nil
+    @player_a = a
+    @player_b = b
     @whose_turn = nil
     @over = false
   end
   
   def run
     show_welcome
-    set_up_players
     start_game
     play
+    show_goodbye
   end
 
   def show_welcome
-    @io.puts "Welcome to Tic Tac Toe"    # text literals shouldn't be here
+    @io.puts "Welcome to Tic Tac Toe"
   end
 
-  def set_up_players
-    prompt_first_player_name
-    collect_first_player
-    prompt_second_player_name
-    collect_second_player
-  end
-
-  def prompt_first_player_name    # 2 sets of methods for first and second player to account for different prompts
-    @io.puts "What is your name?"
-  end
-
-  def collect_first_player
-    name = @io.gets.chomp
-    @player_a = Player.new(name, "a")
-  end
-
-  def prompt_second_player_name
-    @io.puts "What is the name of the other player?"
-  end
-
-  def collect_second_player
-    name = @io.gets.chomp
-    @player_b = Player.new(name, "b")
+  def show_goodbye
+    if @board.has_winner
+      @io.puts "Congratulations, #{@whose_turn.name}"
+    else
+      @io.puts "Scratch game, thank you for playing."
+    end
   end
 
   def start_game
@@ -56,25 +36,9 @@ class Game
 
   def play
     begin 
-      show_board
-      prompt_next_play
-      collect_play
+      @whose_turn.make_next_play
       evaluate
     end while over? == false
-  end
-
-  def show_board
-    @io.puts @board.display
-  end
-
-  def prompt_next_play
-    @io.puts "#{@whose_turn.name}, enter the position you would like to play:"
-  end
-
-  def collect_play
-    position = @io.gets
-    position = position.to_i if position.class == String    # should game be responsible for manipulating input strings?
-    @board.play(position, @whose_turn.id)
   end
 
   def over?
