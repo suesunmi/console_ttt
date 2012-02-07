@@ -6,8 +6,10 @@ class MockIO
   def initialize(answers)
     @answers = answers
   end
+
   def puts(string)
   end
+
   def gets
     @answers.shift
   end

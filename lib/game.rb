@@ -35,7 +35,7 @@ class Game
   end
 
   def play
-    begin 
+    begin
       @whose_turn.make_next_play
       evaluate
     end while over? == false

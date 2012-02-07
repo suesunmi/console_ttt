@@ -1,11 +1,13 @@
 class HumanPlayer
   attr_accessor :name, :id
+
   def initialize(name, id, board, io)
     @name = name
     @id = id
     @board = board
     @io = io
   end
+
   def make_next_play
     prompt_next_play
     collect_play

@@ -3,12 +3,14 @@ require 'board'
 
 class MockPlayer
   attr_accessor :name, :id
+
   def initialize(name, id, plays, board)
     @name = name
     @id = id
     @board = board
     @plays = plays
   end
+
   def make_next_play
     position = @plays.shift
     position.to_i if position.class == String
@@ -21,6 +23,7 @@ describe Game do
     @board = Board.new
     @io = StringIO.new
   end
+
   it "displays welcome message" do
     scratch_game_setup
     @game.show_welcome

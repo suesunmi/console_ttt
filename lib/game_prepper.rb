@@ -5,6 +5,7 @@ require 'game'
 
 class GamePrepper
   attr_accessor :player_a, :player_b, :game
+
   def initialize(io)
     @io = io
     @player_a
