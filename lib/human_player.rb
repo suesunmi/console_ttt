@@ -17,11 +17,9 @@ class HumanPlayer
   end
 
   def collect_play
-    position = "0"
-    until (1..9).include?(position.to_i)
+    begin
       position = @io.gets.chomp
-    end
-    position = position.to_i if position.class == String
+    end until @board.valid?(position)
     @board.play(position, @id)
   end
 end

@@ -48,6 +48,9 @@ class Board
   end
 
   def play(position, who)
+    if position.is_a?(String)
+      position = position.to_i
+    end
     @plays[position] = who
   end
 
@@ -68,5 +71,10 @@ class Board
     end
   end
 
-  
+  def valid?(position)
+    if position.is_a?(String)
+      position = position.to_i
+    end
+    player_at(position) == "" && (1..9).include?(position)
+  end 
 end

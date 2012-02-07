@@ -38,4 +38,17 @@ describe Board do
     @board.player_at(6).should == "b"
     @board.player_at(2).should == "a"
   end
+
+  it "validates plays" do
+    @board.play(3, "a")
+    @board.play(4, "b")
+    @board.play(8, "a")
+    @board.valid?(4).should be_false
+    @board.valid?("x").should be_false
+  end
+
+  it "converts string to integer" do
+    @board.play("9", "a")
+    @board.player_at(9).should == "a"
+  end
 end
