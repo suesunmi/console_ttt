@@ -1,8 +1,15 @@
 class Board
-  attr_accessor :plays
+  attr_accessor :plays, :winner
 
-  def initialize
-    @plays = Hash[ 1, "", 2, "", 3, "", 4, "", 5, "", 6, "", 7, "", 8, "", 9, ""]
+  def initialize(*board)
+    if board.size == 0
+      @plays = Hash[ 1, "", 2, "", 3, "", 4, "", 5, "", 6, "", 7, "", 8, "", 9, ""]
+    else
+      @plays = Hash.new
+      board[0].plays.each do |pos, player|
+        @plays[pos] = player 
+      end
+    end
     @winning_combos = [
       [1,2,3],
       [4,5,6],
@@ -26,10 +33,8 @@ class Board
   end
 
   def get_display_mark(player)    # display string should not be board's responsibility
-    if player == "a"
-      "X"
-    elsif player == "b"
-      "O"
+    if player != ""
+      player
     else
       " "
     end
@@ -38,7 +43,7 @@ class Board
   def player_at(position)
     @plays[position]
   end
-
+ 
   def full?
     full = true
     (1..9).each do |position| 
@@ -77,4 +82,14 @@ class Board
     end
     player_at(position) == "" && (1..9).include?(position)
   end 
+
+  def empties
+    empties = @plays.select { |position, player| player == "" }
+    empties = empties.keys
+  end
+
+  def opponent(who)
+    opponent = @plays.select { |key,value| value != who && value != "" }
+    opponent.values[0]
+  end
 end

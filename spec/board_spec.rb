@@ -51,4 +51,62 @@ describe Board do
     @board.play("9", "a")
     @board.player_at(9).should == "a"
   end
+
+  it "returns array of available positions" do
+    @board.play(1, "x")
+    @board.play(2, "x")
+    @board.play(3, "x")
+    @board.play(4, "x")
+    @board.empties.should == [5,6,7,8,9]
+    @board.player_at(5).should == ""
+    @board.player_at(6).should == ""
+    @board.player_at(7).should == ""
+    @board.player_at(8).should == ""
+    @board.player_at(9).should == ""
+  end
+
+  it "identifies the opponent" do
+    @board.play(5, "o")
+    @board.play(6, "x")
+    @board.play(7, "o")
+    @board.play(8, "x")
+    @board.opponent("o").should == "x"
+  end
+
+  it "initializes based on an existing board" do
+    @board.play(5, "a")
+    @board.play(6, "b")
+    another_board = Board.new(@board)
+    another_board.player_at(5).should == "a"
+    another_board.player_at(6).should == "b"
+    another_board.player_at(1).should == ""
+    another_board.player_at(2).should == ""
+    another_board.player_at(3).should == ""
+    another_board.player_at(4).should == ""
+    another_board.player_at(7).should == ""
+    another_board.player_at(8).should == ""
+    another_board.player_at(9).should == ""
+    @board.player_at(5).should == "a"
+    @board.player_at(6).should == "b"
+    @board.player_at(1).should == ""
+    @board.player_at(2).should == ""
+    @board.player_at(3).should == ""
+    @board.player_at(4).should == ""
+    @board.player_at(7).should == ""
+    @board.player_at(8).should == ""
+    @board.player_at(9).should == ""
+    @board.object_id != another_board.object_id
+  end
+
+  it "initializes with no existing board" do
+    @board.player_at(1).should == ""
+    @board.player_at(2).should == ""
+    @board.player_at(3).should == ""
+    @board.player_at(4).should == ""
+    @board.player_at(5).should == ""
+    @board.player_at(6).should == ""
+    @board.player_at(7).should == ""
+    @board.player_at(8).should == ""
+    @board.player_at(9).should == ""
+  end
 end

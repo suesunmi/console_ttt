@@ -8,7 +8,7 @@ class BeatablePlayer
   end
 
   def make_next_play
-    empties = @board.plays.select { |position, player| player == "" }
-    board.play(empties.keys[0], @id)
+    empties = @board.empties
+    board.play(empties[0], @id)
   end
 end

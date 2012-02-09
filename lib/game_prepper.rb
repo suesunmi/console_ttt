@@ -1,5 +1,5 @@
 require 'board'
-require 'beatable_player'
+require 'unbeatable_player'
 require 'human_player'
 require 'game'
 
@@ -30,7 +30,7 @@ class GamePrepper
     name_1 = @io.gets.chomp
 
     if @preference == "1"
-      @player_a = BeatablePlayer.new("The Computer", "a", @board)
+      @player_a = UnbeatablePlayer.new("The Computer", "a", @board)
       @player_b = HumanPlayer.new(name_1, "b", @board, @io)
     elsif @preference == "2"
       @io.puts "What is the name of the other player?"
