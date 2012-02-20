@@ -30,13 +30,13 @@ class GamePrepper
     name_1 = @io.gets.chomp
 
     if @preference == "1"
-      @player_a = UnbeatablePlayer.new("The Computer", "a", @board)
-      @player_b = HumanPlayer.new(name_1, "b", @board, @io)
+      @player_a = UnbeatablePlayer.new("The Computer", "X", @board)
+      @player_b = HumanPlayer.new(name_1, "O", @board, @io)
     elsif @preference == "2"
       @io.puts "What is the name of the other player?"
       name_2 = @io.gets.chomp
-      @player_a = HumanPlayer.new(name_1, "a", @board, @io)
-      @player_b = HumanPlayer.new(name_2, "b", @board, @io)
+      @player_a = HumanPlayer.new(name_1, "X", @board, @io)
+      @player_b = HumanPlayer.new(name_2, "O", @board, @io)
     end
   end
 
