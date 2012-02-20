@@ -18,12 +18,13 @@ class Game
   end
 
   def show_welcome
-    @io.puts "Welcome to Tic Tac Toe"
+    @io.puts "Welcome to Tic Tac Toe..."
   end
 
   def show_goodbye
     if @board.has_winner
       @io.puts "Congratulations, #{@whose_turn.name}"
+      @io.puts @board.display
     else
       @io.puts "Scratch game, thank you for playing."
     end
