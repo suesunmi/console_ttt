@@ -1,6 +1,4 @@
 require 'game_prepper'
-require 'human_player'
-require 'game'
 
 class MockIO
   def initialize(answers)
@@ -44,7 +42,7 @@ describe GamePrepper do
     @prepper.set_up_players
     @prepper.player_a.name.should == "The Computer"
     @prepper.player_a.id.should == "a"
-    @prepper.player_a.class.should == BeatablePlayer
+    @prepper.player_a.class.should == UnbeatablePlayer
     @prepper.player_b.name.should == "Franz"
     @prepper.player_b.id.should == "b"
     @prepper.player_b.class.should == HumanPlayer

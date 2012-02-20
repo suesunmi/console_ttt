@@ -23,7 +23,7 @@ class Board
     @winner
   end
 
-  def display    # display string should not be board's responsibility
+  def display
     output = ""  
     @plays.each do |position, player|
       output += "#{position}: #{get_display_mark(player)}  |  "
@@ -32,7 +32,7 @@ class Board
     output
   end
 
-  def get_display_mark(player)    # display string should not be board's responsibility
+  def get_display_mark(player)
     if player != ""
       player
     else
@@ -69,7 +69,7 @@ class Board
       a = pos[0]
       b = pos[1]
       c = pos[2]
-      if  @plays[a] != "" && @plays[a] == @plays[b] && @plays[b] == @plays[c]    # this feels ugly
+      if  @plays[a] != "" && @plays[a] == @plays[b] && @plays[b] == @plays[c]
         @winner = @plays[c]
         break
       end
