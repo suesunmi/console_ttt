@@ -1,0 +1,12 @@
+TIC TAC TOE GAME
+===
+by Sue Kim
+
+A project for the purpose of practicing SOLID principles.
+
+A couple options for the game:
+1) 2 players take turns
+2) 1 player plays against the computer
+
+An unbeatable tic tac toe game with console interface.
+To run the game, go to /bin and type ./play_console

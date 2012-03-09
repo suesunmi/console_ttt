@@ -2,11 +2,11 @@ require 'game'
 require 'board'
 
 class MockPlayer
-  attr_accessor :name, :id
+  attr_accessor :name, :marker
 
-  def initialize(name, id, plays, board)
+  def initialize(name, marker, plays, board)
     @name = name
-    @id = id
+    @marker = marker
     @board = board
     @plays = plays
   end
@@ -14,7 +14,7 @@ class MockPlayer
   def make_next_play
     position = @plays.shift
     position.to_i if position.class == String
-    @board.play(position, @id)
+    @board.play(position, @marker)
   end
 end
 
@@ -22,6 +22,20 @@ describe Game do
   before(:each) do
     @board = Board.new
     @io = StringIO.new
+  end
+
+  def scratch_game_setup
+    @player_a = MockPlayer.new("Bonnie", "a", [2,5,6,7,9], @board)
+    @player_b = MockPlayer.new("Clyde", "b", [1,3,4,8], @board)
+    @game = Game.new(@board, @io, @player_a, @player_b)
+    @game.start_game
+  end
+
+  def winning_game_setup
+    @player_a = MockPlayer.new("Bonnie", "a", [5,6,3,9], @board)
+    @player_b = MockPlayer.new("Clyde", "b", [2,4,1], @board)
+    @game = Game.new(@board, @io, @player_a, @player_b)
+    @game.start_game
   end
 
   it "displays welcome message" do
@@ -50,19 +64,5 @@ describe Game do
     @game.whose_turn.name.should == "Bonnie"
     @game.show_goodbye
     @io.string.should include("Congratulations, Bonnie")
-  end
-
-  def scratch_game_setup
-    @player_a = MockPlayer.new("Bonnie", "a", [2,5,6,7,9], @board)
-    @player_b = MockPlayer.new("Clyde", "b", [1,3,4,8], @board)
-    @game = Game.new(@board, @io, @player_a, @player_b)
-    @game.start_game
-  end
-
-  def winning_game_setup
-    @player_a = MockPlayer.new("Bonnie", "a", [5,6,3,9], @board)
-    @player_b = MockPlayer.new("Clyde", "b", [2,4,1], @board)
-    @game = Game.new(@board, @io, @player_a, @player_b)
-    @game.start_game
   end
 end

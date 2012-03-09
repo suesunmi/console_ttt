@@ -1,27 +1,26 @@
 class HumanPlayer
-  attr_accessor :name, :id
+  attr_accessor :name, :marker
 
-  def initialize(name, id, board, io)
+  def initialize(name, marker, board, io)
     @name = name
-    @id = id
+    @marker = marker
     @board = board
     @io = io
   end
 
   def make_next_play
-    prompt_next_play
-    collect_play
-  end
-
-  def prompt_next_play
-    @io.puts @board.display
-    @io.puts "#{@name}, enter the position you would like to play:"
+    desired = collect_play
+    @board.play(desired, @marker)
   end
 
   def collect_play
-    begin
+    @io.puts @board.display
+    @io.puts "#{@name}, enter the position you would like to play:"
+    position = @io.gets.chomp
+    until @board.valid?(position)
+      @io.puts "Answer must be an empty position 1 through 9"
       position = @io.gets.chomp
-    end until @board.valid?(position)
-    @board.play(position, @id)
+    end
+    position
   end
 end

@@ -1,6 +1,6 @@
 #! /usr/bin/env ruby
 $: << File.dirname(__FILE__) + "/../lib" 
-require "game_prepper"
+require "tic_tac_toe"
 
-game = GamePrepper.new(Kernel)
-game.prep_and_run
+game = TicTacToe.new(Kernel)
+game.run

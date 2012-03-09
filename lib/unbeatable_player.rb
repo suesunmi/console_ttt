@@ -1,25 +1,18 @@
-
 class UnbeatablePlayer
-  attr_accessor :name, :id, :board
+  attr_accessor :name, :marker, :board
 
-  def initialize(name, id, board)
+  def initialize(name, marker, board)
     @name = name
-    @id = id
+    @marker = marker
     @board = board
   end
 
   def make_next_play
-    opponent = @board.opponent(@id)
-    choices = Hash.new
-    available = @board.empties
-    available.each do |position|
-      test_board = Board.new(@board)
-      test_board.play(position, @id)
-      best = -(best_for(opponent, test_board))
-      choices[position] = best
+    opponent = @board.opponent(@marker)
+    best = best_of_board_using(@board, @marker) do | test_board, depth |
+      -(best_for(opponent, test_board))
     end
-    optimal_pos = choices.key(choices.values.max)
-    @board.play(optimal_pos, @id)
+    @board.play(best[:position], @marker)
   end
 
   def best_for(player, board)
@@ -34,16 +27,22 @@ class UnbeatablePlayer
     elsif board.full?
       return 0
     end
+    best = best_of_board_using(board, player) do | test_board, depth |
+      (-(best_for(opponent, test_board))) + depth
+    end
+    best[:score]
+  end
 
+  def best_of_board_using(board, player)
     choices = Hash.new
     available = board.empties
     available.each do |position|
-      test_board = Board.new(board)
+      test_board = board.clone
       test_board.play(position, player)
-      best = -(best_for(opponent, test_board))
-      best += available.length
+      best = yield(test_board, available.length)
       choices[position] = best
     end
-    return choices.values.max
+    max = choices.values.max
+    return Hash[:position, choices.key(max), :score, max]
   end
 end

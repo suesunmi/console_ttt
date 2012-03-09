@@ -18,7 +18,7 @@ describe UnbeatablePlayer do
     @board.play(6, "x")
     @board.play(9, "o")
     player.make_next_play
-    @board.player_at(8).should == "x"
+    @board.mark_at(8).should == "x"
   end
 
   it "blocks opponent's win with 3 plays left II" do
@@ -33,7 +33,7 @@ describe UnbeatablePlayer do
     @board.play(4, "o")
     @board.play(5, "o")
     player.make_next_play
-    @board.player_at(8).should == "x"
+    @board.mark_at(8).should == "x"
   end
 
   it "blocks the opponent's win with 3 plays left III" do
@@ -48,7 +48,7 @@ describe UnbeatablePlayer do
     @board.play(5, "o")
     @board.play(8, "x")
     player.make_next_play
-    @board.player_at(6).should == "x"
+    @board.mark_at(6).should == "x"
   end
 
   it "chooses to win with 3 plays left" do
@@ -60,7 +60,7 @@ describe UnbeatablePlayer do
     @board.play(4, "o")
     @board.play(5, "o")
     player.make_next_play
-    @board.player_at(8).should == "x"
+    @board.mark_at(8).should == "x"
   end
 
   it "blocks opponent from winning with 5 plays left" do
@@ -70,7 +70,7 @@ describe UnbeatablePlayer do
     @board.play(8, "x")
     @board.play(2, "o")
     player.make_next_play
-    @board.player_at(1).should == "x"
+    @board.mark_at(1).should == "x"
   end
 
   it "blocks opponent from winning with 6 plays left" do
@@ -79,7 +79,7 @@ describe UnbeatablePlayer do
     @board.play(3, "o")
     @board.play(7, "x")
     player.make_next_play
-    @board.player_at(4).should == "o"
+    @board.mark_at(4).should == "o"
   end 
 
   it "blocks opponent from winning with 6 plays left II" do
@@ -88,7 +88,7 @@ describe UnbeatablePlayer do
     @board.play(1, "b")
     @board.play(9, "a")
     player.make_next_play
-    @board.player_at(6).should == "b"
+    @board.mark_at(6).should == "b"
   end 
 
   it "choose to win rather than block the opponent" do
@@ -98,6 +98,6 @@ describe UnbeatablePlayer do
     @board.play(4, "x")
     @board.play(5, "o")
     player.make_next_play
-    @board.player_at(7).should == "x"
+    @board.mark_at(7).should == "x"
   end
 end

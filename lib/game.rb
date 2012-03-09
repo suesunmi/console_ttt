@@ -24,7 +24,7 @@ class Game
   def show_goodbye
     if @board.has_winner
       @io.puts "Congratulations, #{@whose_turn.name}"
-      @io.puts @board.display
+      @io.puts @board.to_s
     else
       @io.puts "Scratch game, thank you for playing."
     end

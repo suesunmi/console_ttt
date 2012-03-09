@@ -1,33 +1,34 @@
 class Board
   attr_accessor :plays, :winner
 
-  def initialize(*board)
-    if board.size == 0
-      @plays = Hash[ 1, "", 2, "", 3, "", 4, "", 5, "", 6, "", 7, "", 8, "", 9, ""]
-    else
-      @plays = Hash.new
-      board[0].plays.each do |pos, player|
-        @plays[pos] = player 
-      end
-    end
-    @winning_combos = [
-      [1,2,3],
-      [4,5,6],
-      [7,8,9],
-      [1,4,7],
-      [2,5,8],
-      [3,6,9],
-      [1,5,9],
-      [3,5,7]
-    ]
-    @winner
+  WINNING_COMBOS = [
+    [1,2,3],
+    [4,5,6],
+    [7,8,9],
+    [1,4,7],
+    [2,5,8],
+    [3,6,9],
+    [1,5,9],
+    [3,5,7]
+  ]
+
+  def initialize
+    @plays = Hash[ 1, "", 2, "", 3, "", 4, "", 5, "", 6, "", 7, "", 8, "", 9, ""]
   end
 
-  def display
-    output = ""  
+  def clone
+    clone = Board.new
+    @plays.each do |pos, player|
+      clone.plays[pos] = player
+    end
+    clone
+  end
+
+  def to_s
+    output = ""
     @plays.each do |position, player|
-      output += "#{position}: #{get_display_mark(player)}  |  "
-      output += "\n" if position % 3 == 0
+      output << "#{position}: #{get_display_mark(player)}  |  "
+      output << "\n" if position % 3 == 0
     end
     output
   end
@@ -40,7 +41,7 @@ class Board
     end
   end
 
-  def player_at(position)
+  def mark_at(position)
     @plays[position]
   end
  
@@ -60,18 +61,17 @@ class Board
   end
 
   def has_winner
-    do_scoring
+    set_winner
     return @winner != nil
   end
 
-  def do_scoring
-    @winning_combos.each do |pos|
-      a = pos[0]
-      b = pos[1]
-      c = pos[2]
-      if  @plays[a] != "" && @plays[a] == @plays[b] && @plays[b] == @plays[c]
-        @winner = @plays[c]
-        break
+  def set_winner
+    WINNING_COMBOS.each do |combo|
+      a = mark_at(combo[0])
+      b = mark_at(combo[1])
+      c = mark_at(combo[2])
+      if a != "" && a == b && b == c
+        @winner = a
       end
     end
   end
@@ -80,7 +80,7 @@ class Board
     if position.is_a?(String)
       position = position.to_i
     end
-    player_at(position) == "" && (1..9).include?(position)
+    mark_at(position) == "" && (1..9).include?(position)
   end 
 
   def empties
@@ -92,4 +92,5 @@ class Board
     opponent = @plays.select { |key,value| value != who && value != "" }
     opponent.values[0]
   end
+
 end
