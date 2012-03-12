@@ -44,7 +44,7 @@ class Board
   def mark_at(position)
     @plays[position]
   end
- 
+
   def full?
     full = true
     (1..9).each do |position| 
@@ -81,7 +81,7 @@ class Board
       position = position.to_i
     end
     mark_at(position) == "" && (1..9).include?(position)
-  end 
+  end
 
   def empties
     empties = @plays.select { |position, player| player == "" }

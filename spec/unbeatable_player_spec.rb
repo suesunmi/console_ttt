@@ -80,7 +80,7 @@ describe UnbeatablePlayer do
     @board.play(7, "x")
     player.make_next_play
     @board.mark_at(4).should == "o"
-  end 
+  end
 
   it "blocks opponent from winning with 6 plays left II" do
     player = UnbeatablePlayer.new("Computer", "b", @board)
@@ -89,7 +89,7 @@ describe UnbeatablePlayer do
     @board.play(9, "a")
     player.make_next_play
     @board.mark_at(6).should == "b"
-  end 
+  end
 
   it "choose to win rather than block the opponent" do
     player = UnbeatablePlayer.new("Computer", "x", @board)

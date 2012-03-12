@@ -29,7 +29,7 @@ class TicTacToe
     until @preference == "1" || @preference == "2"
       @io.puts "1 or 2 players?"
       @preference = @io.gets.chomp
-    end 
+    end
   end
 
   def set_up_players

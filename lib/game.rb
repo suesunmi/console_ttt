@@ -9,7 +9,7 @@ class Game
     @whose_turn = nil
     @over = false
   end
-  
+
   def run
     show_welcome
     start_game
@@ -48,10 +48,10 @@ class Game
 
   def evaluate
     if @board.full? || @board.has_winner then
-      @over = true 
+      @over = true
     end
-    if @over == false then 
-      toggle_player 
+    if @over == false then
+      toggle_player
     end
   end
 
