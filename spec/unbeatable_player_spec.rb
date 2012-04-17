@@ -88,6 +88,7 @@ describe UnbeatablePlayer do
     @board.play(1, "b")
     @board.play(9, "a")
     player.make_next_play
+    puts @board.to_s
     @board.mark_at(6).should == "b"
   end
 

@@ -9,13 +9,20 @@ class UnbeatablePlayer
 
   def make_next_play
     opponent = @board.opponent(@marker)
-    best = best_of_board_using(@board, @marker) do | test_board, depth |
-      -(best_for(opponent, test_board))
+
+    choices = Hash.new
+    available = @board.empties
+    available.each do |position|
+      test_board = @board.clone
+      test_board.play(position, @marker)
+      best = -(best_for(opponent, test_board, -100, 100))
+      choices[position] = best
     end
-    @board.play(best[:position], @marker)
+    max = choices.values.max
+    @board.play(choices.key(max), @marker)
   end
 
-  def best_for(player, board)
+  def best_for(player, board, alpha, beta)
     opponent = board.opponent(player)
     if board.has_winner
       if board.winner == player
@@ -27,22 +34,20 @@ class UnbeatablePlayer
     elsif board.full?
       return 0
     end
-    best = best_of_board_using(board, player) do | test_board, depth |
-      (-(best_for(opponent, test_board))) + depth
-    end
-    best[:score]
-  end
-
-  def best_of_board_using(board, player)
     choices = Hash.new
     available = board.empties
     available.each do |position|
       test_board = board.clone
       test_board.play(position, player)
-      best = yield(test_board, available.length)
-      choices[position] = best
+      best = (-(best_for(opponent, test_board, -beta, -alpha))) + available.length
+      if best >= beta
+        return best
+      end
+      if best >= alpha
+        alpha = best
+      end
     end
-    max = choices.values.max
-    return Hash[:position, choices.key(max), :score, max]
+    return alpha
   end
+
 end
